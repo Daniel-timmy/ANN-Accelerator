@@ -1,6 +1,6 @@
 module output_layer #(
-    parameter WEIGHT_FILE = "output_layer_weights.mem",
-    parameter BIAS_FILE = "output_layer_bias.mem"
+    parameter WEIGHT_FILE = "C:/Users/user/OneDrive/Desktop/ANN Accelerator/rtl/testvectors/output_layer_weights.mem",
+    parameter BIAS_FILE = "C:/Users/user/OneDrive/Desktop/ANN Accelerator/rtl/testvectors/output_layer_bias.mem"
 ) (
     input  wire         clk,
     input  wire         rst_n,
@@ -14,10 +14,11 @@ module output_layer #(
 
     localparam INPUT_COUNT = 10;
     localparam ACC_WIDTH = 40;
+    localparam DATA_WIDTH = 16;
 
     // Inputs are Q0.16, weights are signed Q8.8, and bias/sum are Q16.16.
-    reg signed [15:0] weights [0:INPUT_COUNT-1];
-    reg signed [ACC_WIDTH-1:0] biases [0:0];
+    reg signed [DATA_WIDTH-1:0] weights [0:INPUT_COUNT-1];
+    reg signed [(2*DATA_WIDTH)-1:0] biases [0:0];
 
     wire signed [16:0] activation_signed [0:INPUT_COUNT-1];
     wire signed [32:0] products [0:INPUT_COUNT-1];
@@ -47,7 +48,7 @@ module output_layer #(
             assign products[input_index] =
                 activation_signed[input_index] * weights[input_index];
             assign scaled_products[input_index] =
-                {{7{products[input_index][32]}}, products[input_index]} >>> 8;
+                $signed({{7{products[input_index][32]}}, products[input_index]}) >>> 8;
         end
     endgenerate
 

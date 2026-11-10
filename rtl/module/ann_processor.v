@@ -1,8 +1,8 @@
 module ann_processor #(
-    parameter LAYER1_WEIGHT_FILE = "layer1_weights.mem",
-    parameter LAYER1_BIAS_FILE = "layer1_bias.mem",
-    parameter OUTPUT_WEIGHT_FILE = "output_layer_weights.mem",
-    parameter OUTPUT_BIAS_FILE = "output_layer_bias.mem"
+    parameter LAYER1_WEIGHT_FILE = "C:/Users/user/OneDrive/Desktop/ANN Accelerator/rtl/testvectors/layer1_weights.mem",
+    parameter LAYER1_BIAS_FILE = "C:/Users/user/OneDrive/Desktop/ANN Accelerator/rtl/testvectors/layer1_bias.mem",
+    parameter OUTPUT_WEIGHT_FILE = "C:/Users/user/OneDrive/Desktop/ANN Accelerator/rtl/testvectors/output_layer_weights.mem",
+    parameter OUTPUT_BIAS_FILE = "C:/Users/user/OneDrive/Desktop/ANN Accelerator/rtl/testvectors/output_layer_bias.mem"
 ) (
     input  wire                clk,
     input  wire                rst_n,

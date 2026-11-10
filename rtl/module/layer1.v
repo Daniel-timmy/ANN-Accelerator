@@ -1,6 +1,6 @@
 module layer1 #(
-    parameter WEIGHT_FILE = "layer1_weights.mem",
-    parameter BIAS_FILE = "layer1_bias.mem"
+    parameter WEIGHT_FILE = "C:/Users/user/OneDrive/Desktop/ANN Accelerator/rtl/testvectors/layer1_weights.mem",
+    parameter BIAS_FILE = "C:/Users/user/OneDrive/Desktop/ANN Accelerator/rtl/testvectors/layer1_bias.mem"
 ) (
     input  wire         clk,
     input  wire         rst_n,
@@ -21,7 +21,7 @@ module layer1 #(
 
     // Weights are neuron-major Q8.8 values; biases and sums are signed Q16.16.
     reg signed [DATA_WIDTH-1:0] weights [0:(INPUT_COUNT*NEURON_COUNT)-1];
-    reg signed [ACC_WIDTH-1:0] biases [0:NEURON_COUNT-1];
+    reg signed [(2*DATA_WIDTH)-1:0] biases [0:NEURON_COUNT-1];
     reg [INDEX_WIDTH-1:0] input_index;
     reg frame_pending;
 
@@ -57,12 +57,11 @@ module layer1 #(
                 .sample_first(input_index == 0),
                 .sample_last(input_index == INPUT_COUNT-1),
                 .data_in(s_data),
-                .weight_in(weights[(neuron_index*INPUT_COUNT) + input_index]),
+                .weight_in(weights[(input_index*NEURON_COUNT) + neuron_index]),
                 .bias_in(biases[neuron_index]),
                 .sum_out(neuron_sum[neuron_index]),
                 .sum_valid(neuron_valid[neuron_index])
             );
-
             activation_function activation_inst (
                 .value_in(neuron_sum[neuron_index]),
                 .value_out(activated[neuron_index])

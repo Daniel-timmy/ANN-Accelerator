@@ -9,7 +9,7 @@ module neuron #(
     input  wire                         sample_last,
     input  wire signed [DATA_WIDTH-1:0] data_in,
     input  wire signed [DATA_WIDTH-1:0] weight_in,
-    input  wire signed [ACC_WIDTH-1:0]  bias_in,
+    input  wire signed [(2*DATA_WIDTH)-1:0]  bias_in,
     output reg  signed [ACC_WIDTH-1:0]  sum_out,
     output reg                          sum_valid
 );
@@ -42,7 +42,7 @@ module neuron #(
                 end else begin
                     accumulator <= accumulator + product_extended;
                     if (sample_last) begin
-                        sum_out <= accumulator + product_extended + bias_in; ,
+                        sum_out <= accumulator + product_extended + bias_in; 
                         sum_valid <= 1'b1;
                     end
                 end
